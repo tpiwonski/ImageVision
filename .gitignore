@@ -1,0 +1,6 @@
+*.pyc
+/env
+*egg-info
+/.idea
+/temp
+storage

@@ -1,0 +1,6 @@
+{% extends 'ui/layout.html' %}
+{% block content %}
+    <div style="border: solid 10px">
+        <img src="{{ url_for('ui.get_image', image_id=image['image_id']) }}"/>
+    </div>
+{% endblock %}

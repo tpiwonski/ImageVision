@@ -1,0 +1,14 @@
+{% extends "ui/layout.html" %}
+{% block content %}
+    <a href="{{ url_for('ui.upload_image') }}">Upload image</a>
+    <ul>
+    {% for image in images %}
+        <li>
+            <div style="width: 300px; height: 300px; border: solid 1px black; align-content: center">
+                <img style="max-width: 100%; max-height: 100%; display: block; margin: auto; line-height: 300px"
+                     src="{{ url_for('ui.get_image', image_id=image['image_id']) }}"/>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
