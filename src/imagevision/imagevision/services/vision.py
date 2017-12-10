@@ -13,8 +13,14 @@ class VisionService(object):
         request = {
             'image': types.Image(content=content)
         }
-        response = self.vision_client.annotate_image(request)
-        result = self.response_formatter.format_response(response)
+        # response = self.vision_client.annotate_image(request)
+        # result = self.response_formatter.format_response(response)
+
+        import json
+        with open('tests\\response.json', 'rt') as f:
+            # f.read(json.dumps(result, indent=4, separators=(',', ': ')))
+            result = json.load(f)
+
         return result
 
 

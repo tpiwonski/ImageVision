@@ -3,11 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>ImageVision</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/rxjs/bundles/Rx.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='ui.css') }}">
+    <script src="{{ url_for('static', filename='ui.js') }}"></script>
+    {% block scripts %}{% endblock %}
 </head>
 <body>
-    <h1>ImageVision</h1>
-    <div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="navbar navbar-dark bg-dark">
+        <div class="container d-flex justify-content-between">
+          <a href="{{ url_for('ui.home') }}" class="navbar-brand">ImageVision</a>
+        </div>
+      </div>
+
+    <div class="container">
+      <h1 class="jumbotron-heading">ImageVision</h1>
+      <p class="lead text-muted">Lorem ipsum.</p>
+    </div>
+
+    <div class="content">
     {% block content %}{% endblock %}
     </div>
+
 </body>
 </html>

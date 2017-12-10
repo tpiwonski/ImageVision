@@ -1,14 +1,38 @@
 {% extends "ui/layout.html" %}
+{% import 'ui/image.html' as IMAGE %}
 {% block content %}
-    <a href="{{ url_for('ui.upload_image') }}">Upload image</a>
-    <ul>
-    {% for image in images %}
-        <li>
-            <div style="width: 300px; height: 300px; border: solid 1px black; align-content: center">
-                <img style="max-width: 100%; max-height: 100%; display: block; margin: auto; line-height: 300px"
-                     src="{{ url_for('ui.get_image', image_id=image['image_id']) }}"/>
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+
+    <div class="container actions">
+        <a href="{{ url_for('ui.upload_image') }}" class="btn btn-primary">Upload an image</a>
+    </div>
+
+    <div class="container images">
+        <div class="row">
+            {% for image in images %}
+            {{ IMAGE.image_card(image) }}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteImageModal" tabindex="-1" role="dialog"
+         aria-labelledby="deleteImageModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteImageModalLabel">Delete image</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete selected image?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 {% endblock %}

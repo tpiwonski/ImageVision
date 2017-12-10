@@ -1,0 +1,42 @@
+{% macro image_card(image) %}
+    <div class="card image">
+        <div>
+            <a href="{{ url_for('ui.preview_image', image_id=image['image_id']) }}">
+                <img class="card-img-top" src="{{ url_for('ui.get_image', image_id=image['image_id']) }}">
+            </a>
+        </div>
+        <div class="card-body">
+            <a type="button" class="btn btn-primary" href="{{ url_for('ui.preview_image', image_id=image['image_id']) }}">Preview</a>
+            <button type="button" class="btn btn-danger" data-image-id="{{ image['image_id'] }}"
+                    data-toggle="modal" data-target="#deleteImageModal">Delete</button>
+        </div>
+    </div>
+{% endmacro %}
+{% macro image_annotations(image) %}
+    {% if image['image_annotations'] %}
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Labels</h6>
+                {% for label in image['image_annotations']['label_annotations'] %}
+                    <span class="badge badge-info">{{ label['description'] }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Safe search</h6>
+                {% for safe_search, likelihood in image['image_annotations']['safe_search_annotation'].items() %}
+                    <span class="badge badge-secondary">{{ safe_search }} : {{ likelihood }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Web entities</h6>
+                {% for entity in image['image_annotations']['web_detection']['web_entities'] %}
+                    <span class="badge badge-dark">{{ entity['description'] }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}

@@ -1,4 +1,5 @@
-from sqlalchemy import MetaData, Table, create_engine, Column, Integer, JSON, Unicode, select, insert, update
+from sqlalchemy import MetaData, Table, create_engine, Column, Integer, JSON, Unicode, select, insert, update, delete, \
+    bindparam
 
 metadata = MetaData()
 
@@ -65,6 +66,10 @@ class ImageRepository(object):
 
     def annotate_image(self, image_id, annotations):
         stmt = update(image).\
-               where(image.c.image_id == image_id).\
+               where(image.c.image_id == bindparam('id')).\
                values(dict(image_annotations=annotations))
-        self.connection.execute(stmt)
+        self.connection.execute(stmt, id=image_id)
+
+    def delete_image(self, image_id):
+        stmt = delete(image).where(image.c.image_id == bindparam('id'))
+        self.connection.execute(stmt, dict(id=image_id))
