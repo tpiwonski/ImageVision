@@ -1,7 +1,10 @@
 $(document).ready(function() {
 
-    var deleteImage$ = (function() {
+    createDeleteObservable()
+        .mergeMap(deleteImage)
+        .subscribe(reloadPage);
 
+    function createDeleteObservable() {
         var modal = $('#deleteImageModal');
 
         modal.on('show.bs.modal', function (e) {
@@ -9,19 +12,17 @@ $(document).ready(function() {
             modal.data('image-id', imageId);
         });
 
-        modal.on('click', '.btn-primary', function (e) {
+        modal.on('click', '#deleteImageButton', function (e) {
             modal.modal('hide');
         });
 
         return Rx.Observable.create(function(observer) {
-            modal.on('click', '.btn-primary', function (e) {
+            modal.on('click', '#deleteImageButton', function (e) {
                 var imageId = modal.data('image-id');
                 observer.next(imageId);
             });
         });
-    }());
-
-    deleteImage$.mergeMap(deleteImage).subscribe(reload);
+    }
 
     function deleteImage(imageId) {
         return Rx.Observable.fromPromise($.ajax({
@@ -30,7 +31,7 @@ $(document).ready(function() {
         }));
     }
 
-    function reload() {
+    function reloadPage() {
         window.location = window.location;
     }
 });

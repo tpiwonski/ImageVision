@@ -13,38 +13,32 @@ class VisionService(object):
         request = {
             'image': types.Image(content=content)
         }
-        # response = self.vision_client.annotate_image(request)
-        # result = self.response_formatter.format_response(response)
-
-        import json
-        with open('tests\\response.json', 'rt') as f:
-            # f.read(json.dumps(result, indent=4, separators=(',', ': ')))
-            result = json.load(f)
-
+        response = self.vision_client.annotate_image(request)
+        result = self.response_formatter.format_response(response)
         return result
 
 
 class ResponseFormatter(object):
 
     def format_annotation(self, annotation):
-        a = {}
+        result = {}
         for field, value in annotation.ListFields():
             if isinstance(value, (str, int, float)):
-                a[field.name] = value
+                result[field.name] = value
             else:
                 if hasattr(value, 'ListFields'):
-                    a[field.name] = self.format_annotation(value)
+                    result[field.name] = self.format_annotation(value)
                 else:
-                    a[field.name] = self.format_annotations(value)
+                    result[field.name] = self.format_annotations(value)
 
-        return a
+        return result
 
     def format_annotations(self, annotations):
-        a = []
+        result = []
         for annotation in annotations:
-            a.append(self.format_annotation(annotation))
+            result.append(self.format_annotation(annotation))
 
-        return a
+        return result
 
     def format_response(self, response):
         result = {

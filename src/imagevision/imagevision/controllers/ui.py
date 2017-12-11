@@ -48,7 +48,7 @@ def preview_image(image_id):
 
 
 ui.add_url_rule('/', 'home', home)
-ui.add_url_rule('/image/upload', 'upload_image', upload_image, methods=['GET', 'POST'])
+ui.add_url_rule('/image', 'upload_image', upload_image, methods=['GET', 'POST'])
 ui.add_url_rule('/image/<image_id>', 'get_image', get_image)
 ui.add_url_rule('/image/<image_id>/preview', 'preview_image', preview_image)
 

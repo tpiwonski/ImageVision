@@ -1,16 +1,21 @@
 {% extends 'ui/layout.html' %}
 {% import 'ui/image.html' as IMAGE %}
 {% block scripts %}
-    <script src="{{ url_for('static', filename='preview.js') }}"></script>
+    <script src="/static/js/preview.js"></script>
+{% endblock %}
+{% block description %}
+    <p class="lead text-muted">
+      Image {{ image['image_file_name'] }} analysis results.
+    </p>
 {% endblock %}
 {% block content %}
     <div class="container">
         <div class="card">
             <img id="image" data-src="{{ url_for('ui.get_image', image_id=image['image_id']) }}"/>
-            <canvas id="canvas" width="668" height="387"></canvas>
+            <canvas id="canvas"></canvas>
             <script id="annotations" type="application/json">
                 {% if image['image_annotations'] %}
-                {{ image['image_annotations']['face_annotations']|tojson }}
+                {{ image['image_annotations']|tojson }}
                 {% endif %}
             </script>
         </div>

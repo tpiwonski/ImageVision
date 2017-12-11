@@ -1,5 +1,11 @@
 {% extends "ui/layout.html" %}
 {% import 'ui/image.html' as IMAGE %}
+{% block description %}
+    <p class="lead text-muted">
+      Image hosting application that additionally performs computer vision analysis via the Google Vision API
+      and provides a visual report on the uploaded photos showing what information was found.
+    </p>
+{% endblock %}
 {% block content %}
 
     <div class="container actions">
@@ -29,7 +35,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Delete</button>
+            <button type="button" id="deleteImageButton" class="btn btn-danger">Delete</button>
           </div>
         </div>
       </div>

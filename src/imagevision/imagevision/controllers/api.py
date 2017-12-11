@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, flash
+from flask import Blueprint, current_app, flash, request
 from flask.views import MethodView
 
 from imagevision.services.image import create_image_service
@@ -24,7 +24,7 @@ class ImageAnnotationsResource(MethodView):
         return ''
 
 
-api.add_url_rule('/image/<image_id>', view_func=ImageResource.as_view('image'))
+api.add_url_rule('/image/<image_id>', view_func=ImageResource.as_view('image'), methods=['DELETE'])
 api.add_url_rule('/image/<image_id>/annotations', view_func=ImageAnnotationsResource.as_view('image_annotations'))
 
 

@@ -1,9 +1,32 @@
 {% extends 'ui/layout.html' %}
+{% block scripts %}
+    <script src="/static/js/upload.js"></script>
+{% endblock %}
+{% block description %}
+    <p class="lead text-muted">
+      Select an image to upload.
+    </p>
+{% endblock %}
 {% block content %}
     <div class="container">
-        <form action="upload" method="post" enctype="multipart/form-data">
+        <form id="upload" action="{{ url_for('ui.upload_image') }}" method="post" enctype="multipart/form-data">
             <input type="file" name="file">
             <input type="submit" class="btn btn-primary">
         </form>
     </div>
+
+    <div class="modal fade" id="waitModal" tabindex="-1" role="dialog"
+         aria-labelledby="waitModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="waitModalLabel">Processing image</h5>
+          </div>
+          <div class="modal-body">
+            Image is being processed. Please wait...
+          </div>
+        </div>
+      </div>
+    </div>
+
 {% endblock %}
