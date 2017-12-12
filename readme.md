@@ -5,7 +5,8 @@ Follow the instructions on https://cloud.google.com/vision/docs/how-to.
 After obtaining the key, set the environment variable GOOGLE_APPLICATION_CREDENTIALS pointing to the key file.
 
 ## How to run application:
- 
+
+* install Python 3.6
 * git clone https://github.com/tpiwonski/ImageVision.git
 * cd ImageVision
 * python -m venv env
