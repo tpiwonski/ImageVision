@@ -57,16 +57,16 @@ class FunctionalTestCase(TestCase):
         })
 
         assert r.status_code == 302
-        assert b'/image/1/preview' in r.data
+        assert b'/image/1/details' in r.data
 
     @patch.object(VisionService, 'annotate_image')
-    def test_can_preview_image(self, annotate_image):
+    def test_can_view_image_details(self, annotate_image):
         annotate_image.return_value = self.test_annotations_response
         images = self._create_test_images(1)
 
-        r = self.app.get('/image/{0}/preview'.format(images[0]))
+        r = self.app.get('/image/{0}/details'.format(images[0]))
 
-        assert b'Image test.jpg analysis results' in r.data
+        assert b'Image test.jpg details' in r.data
         assert b'social group' in r.data
         assert b'violence : 1' in r.data
         assert b'Harrison Ford' in r.data
@@ -79,7 +79,7 @@ class FunctionalTestCase(TestCase):
         r = self.app.get('/')
 
         for image_id in images:
-            assert (b'/image/%d/preview' % image_id) in r.data
+            assert (b'/image/%d/details' % image_id) in r.data
 
     @patch.object(VisionService, 'annotate_image')
     def test_can_delete_image(self, annotate_image):
@@ -90,6 +90,6 @@ class FunctionalTestCase(TestCase):
 
         assert r.status_code == 200
 
-        r = self.app.get('/image/{0}/preview'.format(images[0]))
+        r = self.app.get('/image/{0}/details'.format(images[0]))
 
         assert b'Image not found' in r.data

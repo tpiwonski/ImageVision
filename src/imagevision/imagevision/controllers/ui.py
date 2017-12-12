@@ -37,7 +37,7 @@ class ImageUpload(MethodView):
 
         flash("Image uploaded")
 
-        return redirect(url_for('ui.image_preview', image_id=image_id))
+        return redirect(url_for('ui.image_details', image_id=image_id))
 
 
 class Image(MethodView):
@@ -53,7 +53,7 @@ class Image(MethodView):
                          as_attachment=True, attachment_filename=image['image_file_name'])
 
 
-class ImagePreview(MethodView):
+class ImageDetails(MethodView):
     methods = ['GET']
 
     def get(self, image_id):
@@ -62,13 +62,13 @@ class ImagePreview(MethodView):
         if image is None:
             raise Exception('Image not found')
 
-        return render_template('ui/preview.html', image=image)
+        return render_template('ui/details.html', image=image)
 
 
 ui.add_url_rule('/', view_func=Home.as_view('home'))
 ui.add_url_rule('/image', view_func=ImageUpload.as_view('image_upload'))
 ui.add_url_rule('/image/<image_id>', view_func=Image.as_view('image'))
-ui.add_url_rule('/image/<image_id>/preview', view_func=ImagePreview.as_view('image_preview'))
+ui.add_url_rule('/image/<image_id>/details', view_func=ImageDetails.as_view('image_details'))
 
 
 def error_handler(error):
