@@ -1,4 +1,4 @@
 {
-  "DATABASE_URI": "postgresql+psycopg2://imagevision:test@localhost:5432/imagevision",
+  "DATABASE_URI": "sqlite:///database.sqlite",
   "STORAGE_PATH": "storage"
 }
