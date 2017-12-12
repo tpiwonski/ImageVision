@@ -1,13 +1,13 @@
 $(document).ready(function() {
 
-    loadImage()
-        .mergeMap(function(image) {
+    loadImage().
+        mergeMap(function(image) {
             return Rx.Observable.concat(Rx.Observable.of(image), windowResized().map(function() {
                 return image;
             }))
-        })
-        .withLatestFrom(getAnnotations())
-        .subscribe(drawAnnotations);
+        }).
+        withLatestFrom(getAnnotations()).
+        subscribe(drawAnnotations);
 
     function windowResized() {
         return Rx.Observable.fromEvent(window, 'resize')
@@ -54,6 +54,15 @@ $(document).ready(function() {
             var h = v[2]['y'] - v[1]['y'];
 
             ctx.strokeRect(x * scaleX, y * scaleY, w * scaleX, h * scaleY);
+
+            face['landmarks'].forEach(function(landmark) {
+                var position = landmark['position'];
+
+                var x = position['x'];
+                var y = position['y'];
+
+                ctx.strokeRect(x * scaleX, y * scaleY, 1, 2);
+            });
         });
     }
 });

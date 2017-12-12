@@ -1,13 +1,13 @@
 {% macro image_card(image) %}
     <div class="card image">
         <div>
-            <a href="{{ url_for('ui.preview_image', image_id=image['image_id']) }}">
-                <img class="card-img-top" src="{{ url_for('ui.get_image', image_id=image['image_id']) }}">
+            <a href="{{ url_for('ui.image_preview', image_id=image['image_id']) }}">
+                <img class="card-img-top" src="{{ url_for('ui.image', image_id=image['image_id']) }}">
             </a>
         </div>
         <div class="card-body">
             <a class="btn btn-primary" role="button"
-                    href="{{ url_for('ui.preview_image', image_id=image['image_id']) }}">Preview</a>
+                    href="{{ url_for('ui.image_preview', image_id=image['image_id']) }}">Preview</a>
             <a class="btn btn-danger" role="button" data-image-id="{{ image['image_id'] }}"
                     data-toggle="modal" data-target="#deleteImageModal">Delete</a>
         </div>

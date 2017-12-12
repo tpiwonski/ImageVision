@@ -1,7 +1,7 @@
 from flask import Flask
-from imagevision.controllers.ui import setup_ui
 from imagevision.repositories.database import setup_database
-from imagevision.controllers.api import setup_api
+from imagevision.controllers.ui import setup_ui
+from imagevision.controllers.ajax import setup_ajax
 
 
 def create_application():
@@ -13,6 +13,6 @@ def create_application():
 
     setup_database(app)
     setup_ui(app)
-    setup_api(app)
+    setup_ajax(app)
 
     return app

@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        <form id="upload" action="{{ url_for('ui.upload_image') }}" method="post" enctype="multipart/form-data">
+        <form id="upload" action="{{ url_for('ui.image_upload') }}" method="post" enctype="multipart/form-data">
             <input type="file" name="file">
             <input type="submit" class="btn btn-primary">
         </form>

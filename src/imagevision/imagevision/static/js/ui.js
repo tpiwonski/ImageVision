@@ -1,8 +1,10 @@
 $(document).ready(function() {
 
-    createDeleteObservable()
-        .mergeMap(deleteImage)
-        .subscribe(reloadPage);
+    createDeleteObservable().
+        mergeMap(deleteImage).
+        subscribe(reloadPage);
+
+    dismissAlerts();
 
     function createDeleteObservable() {
         var modal = $('#deleteImageModal');
@@ -26,12 +28,19 @@ $(document).ready(function() {
 
     function deleteImage(imageId) {
         return Rx.Observable.fromPromise($.ajax({
-            url: '/api/image/' + imageId,
+            url: '/ajax/image/' + imageId,
             method: 'DELETE'
         }));
     }
 
     function reloadPage() {
         window.location = window.location;
+    }
+
+    function dismissAlerts() {
+        Rx.Observable.timer(3000).
+            subscribe(function(){
+                $('.alert').slideUp('slow');
+            });
     }
 });
