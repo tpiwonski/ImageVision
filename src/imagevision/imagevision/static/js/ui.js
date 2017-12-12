@@ -38,7 +38,7 @@ $(document).ready(function() {
     }
 
     function dismissAlerts() {
-        Rx.Observable.timer(3000).
+        Rx.Observable.timer(2000).
             subscribe(function(){
                 $('.alert').slideUp('slow');
             });

@@ -5,6 +5,8 @@ class ImageStorage(object):
 
     def __init__(self, storage_path):
         self.storage_path = storage_path
+        if not os.path.exists(self.storage_path):
+            os.mkdir(self.storage_path)
 
     def save_image(self, image_id, image_file):
         image_path = self.get_image_path(image_id)

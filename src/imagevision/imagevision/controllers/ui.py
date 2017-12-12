@@ -46,6 +46,9 @@ class Image(MethodView):
     def get(self, image_id):
         image_service = create_image_service(current_app)
         image = image_service.get_image(image_id)
+        if image is None:
+            raise Exception('Image not found')
+
         return send_file(image['image_file_path'], mimetype=image['image_mime_type'],
                          as_attachment=True, attachment_filename=image['image_file_name'])
 
@@ -56,6 +59,9 @@ class ImagePreview(MethodView):
     def get(self, image_id):
         image_service = create_image_service(current_app)
         image = image_service.get_image(image_id)
+        if image is None:
+            raise Exception('Image not found')
+
         return render_template('ui/preview.html', image=image)
 
 

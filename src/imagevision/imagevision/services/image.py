@@ -13,17 +13,14 @@ class ImageService(object):
     def create_image(self, image_file, file_name, mime_type):
         image_id = self.repository.create_image(file_name, mime_type)
         self.storage.save_image(image_id, image_file)
-
-        image_file = self.storage.load_image(image_id)
-        with image_file as f:
-            annotations = self.vision.annotate_image(f)
-
-        self.repository.annotate_image(image_id, annotations)
-
+        self.annotate_image(image_id)
         return image_id
 
     def get_image(self, image_id):
         image = self.repository.get_image(image_id)
+        if image is None:
+            return None
+
         image['image_file_path'] = self.storage.get_image_path(image_id)
         return image
 
@@ -35,7 +32,6 @@ class ImageService(object):
         return images
 
     def annotate_image(self, image_id):
-        image = self.get_image(image_id)
         image_file = self.storage.load_image(image_id)
         with image_file as f:
             annotations = self.vision.annotate_image(f)
@@ -49,7 +45,7 @@ class ImageService(object):
 
 def create_image_service(app):
     repository = ImageRepository(app.config['DATABASE_URI'])
-    storage = ImageStorage(app.config['STORAGE_FOLDER'])
+    storage = ImageStorage(app.config['STORAGE_PATH'])
     vision = VisionService()
     service = ImageService(repository, storage, vision)
     return service

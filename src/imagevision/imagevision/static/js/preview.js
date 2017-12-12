@@ -10,10 +10,7 @@ $(document).ready(function() {
         subscribe(drawAnnotations);
 
     function windowResized() {
-        return Rx.Observable.fromEvent(window, 'resize')
-            .debounce(function(e) {
-                return Rx.Observable.interval(100);
-            });
+        return Rx.Observable.fromEvent(window, 'resize');
     }
 
     function loadImage() {
