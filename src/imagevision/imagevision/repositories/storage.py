@@ -2,6 +2,9 @@ import os
 
 
 class ImageStorage(object):
+    """
+    A class for storing and retrieving files.
+    """
 
     def __init__(self, storage_path):
         self.storage_path = storage_path

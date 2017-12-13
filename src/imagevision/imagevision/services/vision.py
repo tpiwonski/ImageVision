@@ -3,12 +3,21 @@ from google.cloud.vision import types
 
 
 class VisionService(object):
+    """
+    A service for annotating images.
+    """
 
     def __init__(self):
         self.vision_client = ImageAnnotatorClient()
         self.response_formatter = ResponseFormatter()
 
     def annotate_image(self, image_file):
+        """
+        Annotate the image.
+
+        :param image_file: a file object
+        :return: image annotations
+        """
         content = image_file.read()
         request = {
             'image': types.Image(content=content)
@@ -19,6 +28,10 @@ class VisionService(object):
 
 
 class ResponseFormatter(object):
+    """
+    A class for formatting responses returned from the Google vision API
+    to simple dictionary/list structures.
+    """
 
     def format_annotation(self, annotation):
         result = {}

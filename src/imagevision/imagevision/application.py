@@ -5,6 +5,12 @@ from imagevision.controllers.ajax import setup_ajax
 
 
 def create_application(config=None):
+    """
+    Create the application.
+
+    :param config: a configuration object to update
+    :return: the application
+    """
     app = Flask(__name__)
     app.config.from_json('config.json')
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024

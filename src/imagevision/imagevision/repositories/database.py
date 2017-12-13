@@ -53,6 +53,9 @@ def setup_database(app):
 
 
 class ImageRepository(object):
+    """
+    A class for storing and retrieving images data.
+    """
 
     all_columns = [image.c.image_id, image.c.image_file_name, image.c.image_mime_type, image.c.image_annotations]
 
