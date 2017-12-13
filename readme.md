@@ -7,19 +7,19 @@ After obtaining the key, set the environment variable GOOGLE_APPLICATION_CREDENT
 ## How to run application:
 
 * install Python 3.6
-* git clone https://github.com/tpiwonski/ImageVision.git
-* cd ImageVision
-* python -m venv env
-* env\Scripts\activate.bat
-* pip install -r requirements.txt
-* cd src\imagevision\
-* pip install -e .
-* cd imagevision
-* set FLASK_APP=imagevision
-* flask create_db
-* flask run
+* `git clone https://github.com/tpiwonski/ImageVision.git`
+* `cd ImageVision`
+* `python -m venv env`
+* `env\Scripts\activate.bat` on Windows or `source env\bin\activate` on Linux
+* `pip install -r requirements.txt`
+* `cd src\imagevision\`
+* `pip install -e .`
+* `cd imagevision`
+* `set FLASK_APP=imagevision` on Windows or `export FLASK_APP=imagevision` on Linux
+* `flask create_db`
+* `flask run`
 
 ## How to run tests:
 
-* cd tests
-* python -m unittest test_functional.py
+* `cd tests`
+* `python -m unittest test_functional.py`

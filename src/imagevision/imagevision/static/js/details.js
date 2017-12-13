@@ -23,7 +23,13 @@ $(document).ready(function() {
     }
 
     function getAnnotations() {
-        return Rx.Observable.of(JSON.parse($('#annotations').text()))
+        var annotations = $('#annotations').text().trim();
+        if (annotations) {
+            annotations = JSON.parse(annotations);
+        } else {
+            annotations = {};
+        }
+        return Rx.Observable.of(annotations);
     }
 
     function drawAnnotations(args) {
@@ -43,23 +49,27 @@ $(document).ready(function() {
         var ctx = canvas.getContext('2d');
         ctx.strokeStyle="#00FF00";
 
-        annotations['face_annotations'].forEach(function(face) {
-            var v = face['bounding_poly']['vertices'];
-            var x = v[0]['x'];
-            var y = v[0]['y'];
-            var w = v[1]['x'] - v[0]['x'];
-            var h = v[2]['y'] - v[1]['y'];
+        if ('face_annotations' in annotations) {
+            annotations['face_annotations'].forEach(function (face) {
+                var v = face['bounding_poly']['vertices'];
+                var x = v[0]['x'];
+                var y = v[0]['y'];
+                var w = v[1]['x'] - v[0]['x'];
+                var h = v[2]['y'] - v[1]['y'];
 
-            ctx.strokeRect(x * scaleX, y * scaleY, w * scaleX, h * scaleY);
+                ctx.strokeRect(x * scaleX, y * scaleY, w * scaleX, h * scaleY);
 
-            face['landmarks'].forEach(function(landmark) {
-                var position = landmark['position'];
+                if ('landmarks' in face) {
+                    face['landmarks'].forEach(function (landmark) {
+                        var position = landmark['position'];
 
-                var x = position['x'];
-                var y = position['y'];
+                        var x = position['x'];
+                        var y = position['y'];
 
-                ctx.strokeRect(x * scaleX, y * scaleY, 1, 2);
+                        ctx.strokeRect(x * scaleX, y * scaleY, 1, 1);
+                    });
+                }
             });
-        });
+        }
     }
 });
