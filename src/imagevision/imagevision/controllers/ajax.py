@@ -1,7 +1,8 @@
-from flask import Blueprint, current_app, flash
+from flask import Blueprint, flash
 from flask.views import MethodView
 
-from imagevision.services.image import create_image_service
+from imagevision.injector import inject
+from imagevision.services.image import ImageService
 
 ajax = Blueprint('ajax', __name__)
 
@@ -9,9 +10,12 @@ ajax = Blueprint('ajax', __name__)
 class Image(MethodView):
     methods = ['DELETE']
 
+    @inject(image_service=ImageService)
+    def __init__(self, image_service):
+        self.image_service = image_service
+
     def delete(self, image_id):
-        image_service = create_image_service(current_app)
-        image_service.delete_image(image_id)
+        self.image_service.delete_image(image_id)
         flash("Image deleted")
         return ''
 

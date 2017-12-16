@@ -1,3 +1,4 @@
+from imagevision.injector import inject
 from imagevision.repositories.database import ImageRepository
 from imagevision.repositories.storage import ImageStorage
 from imagevision.services.vision import VisionService
@@ -8,6 +9,7 @@ class ImageService(object):
     A service for handling image operations.
     """
 
+    @inject(repository=ImageRepository, storage=ImageStorage, vision=VisionService)
     def __init__(self, repository, storage, vision):
         self.repository = repository
         self.storage = storage
@@ -77,9 +79,9 @@ class ImageService(object):
         self.storage.delete_image(image_id)
 
 
-def create_image_service(app):
-    repository = ImageRepository(app.config['DATABASE_URI'])
-    storage = ImageStorage(app.config['STORAGE_PATH'])
-    vision = VisionService()
-    service = ImageService(repository, storage, vision)
-    return service
+# def create_image_service(app):
+#     repository = ImageRepository(app.config['DATABASE_URI'])
+#     storage = ImageStorage(app.config['STORAGE_PATH'])
+#     vision = VisionService()
+#     service = ImageService(repository, storage, vision)
+#     return service

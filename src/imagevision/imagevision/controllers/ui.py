@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, current_app, send_file
 from flask.views import MethodView
 
-from imagevision.services.image import create_image_service
+from imagevision.injector import inject
+from imagevision.services.image import ImageService
 
 ui = Blueprint('ui', __name__)
 
@@ -9,14 +10,21 @@ ui = Blueprint('ui', __name__)
 class Home(MethodView):
     methods = ['GET']
 
+    @inject(image_service=ImageService)
+    def __init__(self, image_service):
+        self.image_service = image_service
+
     def get(self):
-        image_service = create_image_service(current_app)
-        images = image_service.get_images(0, 10)
+        images = self.image_service.get_images(0, 10)
         return render_template('ui/home.html', images=images)
 
 
 class ImageUpload(MethodView):
     methods = ['GET', 'POST']
+
+    @inject(image_service=ImageService)
+    def __init__(self, image_service):
+        self.image_service = image_service
 
     def get(self):
         return render_template('ui/upload.html')
@@ -32,8 +40,7 @@ class ImageUpload(MethodView):
             flash('No file')
             return redirect(url_for('ui.image_upload'))
 
-        image_service = create_image_service(current_app)
-        image_id = image_service.create_image(image_file, image_file.filename, image_file.mimetype)
+        image_id = self.image_service.create_image(image_file, image_file.filename, image_file.mimetype)
 
         flash("Image uploaded")
 
@@ -43,9 +50,12 @@ class ImageUpload(MethodView):
 class Image(MethodView):
     methods = ['GET']
 
+    @inject(image_service=ImageService)
+    def __init__(self, image_service):
+        self.image_service = image_service
+
     def get(self, image_id):
-        image_service = create_image_service(current_app)
-        image = image_service.get_image(image_id)
+        image = self.image_service.get_image(image_id)
         if image is None:
             raise Exception('Image not found')
 
@@ -56,9 +66,12 @@ class Image(MethodView):
 class ImageDetails(MethodView):
     methods = ['GET']
 
+    @inject(image_service=ImageService)
+    def __init__(self, image_service):
+        self.image_service = image_service
+
     def get(self, image_id):
-        image_service = create_image_service(current_app)
-        image = image_service.get_image(image_id)
+        image = self.image_service.get_image(image_id)
         if image is None:
             raise Exception('Image not found')
 

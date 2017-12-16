@@ -1,13 +1,18 @@
 import os
 
+from flask import Flask
+
+from imagevision.injector import inject
+
 
 class ImageStorage(object):
     """
     A class for storing and retrieving files.
     """
 
-    def __init__(self, storage_path):
-        self.storage_path = storage_path
+    @inject(app=Flask)
+    def __init__(self, app):
+        self.storage_path = app.config['STORAGE_PATH']
         if not os.path.exists(self.storage_path):
             os.mkdir(self.storage_path)
 

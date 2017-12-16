@@ -1,8 +1,10 @@
 import json
 
-from flask import g
+from flask import g, Flask
 from sqlalchemy import MetaData, Table, create_engine, Column, Integer, Unicode, select, insert, update, delete, \
     bindparam, TEXT
+
+from imagevision.injector import inject
 
 metadata = MetaData()
 
@@ -59,8 +61,9 @@ class ImageRepository(object):
 
     all_columns = [image.c.image_id, image.c.image_file_name, image.c.image_mime_type, image.c.image_annotations]
 
-    def __init__(self, database_uri):
-        self.database_uri = database_uri
+    @inject(app=Flask)
+    def __init__(self, app):
+        self.database_uri = app.config['DATABASE_URI']
 
     @property
     def connection(self):
